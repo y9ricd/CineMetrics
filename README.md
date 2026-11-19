@@ -7,7 +7,7 @@
 
 ---
 
-## 1. Tentang Aplikasi (Bahasa Sederhana)
+## 1. Tentang Aplikasi
 
 **CineMetrics** adalah aplikasi web interaktif yang berfungsi seperti **"kalkulator pintar" untuk industri film**.
 
