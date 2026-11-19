@@ -3697,13 +3697,24 @@
 
           const formData = new FormData(form);
           formData.append('ajax', '1');
+          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
 
-          fetch(form.action, {
+          const headers = { 'X-Requested-With': 'XMLHttpRequest' };
+          if (csrfToken) {
+              headers['X-CSRFToken'] = csrfToken;
+          }
+
+          fetch(form.action || window.location.pathname, {
               method: 'POST',
               body: formData,
-              headers: { 'X-Requested-With': 'XMLHttpRequest' }
+              headers: headers
           })
-          .then(res => res.json())
+          .then(res => {
+              if (!res.ok) {
+                  throw new Error(`Server returned HTTP ${res.status}`);
+              }
+              return res.json();
+          })
           .then(data => {
               if (data.success && data.result) {
                   isAnalyzed = true;

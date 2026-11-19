@@ -36,6 +36,18 @@ DEBUG = os.getenv("DEBUG", "True").strip().lower() in ("true", "1", "t", "yes")
 _allowed_hosts_str = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost,*")
 ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts_str.split(",") if h.strip()]
 
+# Keamanan CSRF untuk HTTPS (PythonAnywhere, GitHub Codespaces, dan Localhost)
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.pythonanywhere.com",
+    "https://*.github.dev",
+    "https://*.app.github.dev",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
+_csrf_origins_env = os.getenv("CSRF_TRUSTED_ORIGINS", "")
+if _csrf_origins_env:
+    CSRF_TRUSTED_ORIGINS.extend([o.strip() for o in _csrf_origins_env.split(",") if o.strip()])
+
 # Application definition
 
 INSTALLED_APPS = [
