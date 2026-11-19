@@ -1,8 +1,6 @@
 # CineMetrics: Sistem Cerdas Penaksir Kualitas & Rating Film Berbasis Web
 
-> **Tugas Akhir Mata Kuliah Sistem Cerdas (Semester 3)**  
-> **Implementasi Modul 14 (Deployment Model Machine Learning) & Praktikum P07**  
-> Program Studi D3 Teknologi Informasi — Politeknik Negeri Madiun  
+> **Implementasi Modul 14 (Deployment Model Machine Learning) & Praktikum P07**   
 > **Pengembang:** Mohammad Saputra Abdul Farid (NIM: 253307025)
 
 ---
