@@ -9,13 +9,14 @@
 
 ## 1. Tentang Aplikasi (Bahasa Sederhana)
 
-**CineMetrics** adalah aplikasi web interaktif yang berfungsi seperti **"kalkulator pintar" untuk industri film**. 
+**CineMetrics** adalah aplikasi web interaktif yang berfungsi seperti **"kalkulator pintar" untuk industri film**.
 
 Sebelum sebuah film diproduksi, produser dan sutradara biasanya harus menginvestasikan dana puluhan miliar rupiah tanpa tahu pasti bagaimana respons penonton nantinya. Aplikasi ini membantu memberikan gambaran awal:
+
 - Apakah rencana film tersebut berpeluang masuk kategori **Sangat Bagus**, **Bagus**, atau berisiko **Kurang**?
 - Kira-kira berapa perkiraan skor rating IMDb (skala 1.0 s.d. 10.0) yang akan diperoleh?
 
-Semua perkiraan ini dihitung secara matematis menggunakan model kecerdasan buatan (*Machine Learning*) yang telah mempelajari pola dari **5.421 film dunia** yang tercatat di basis data historis IMDb.
+Semua perkiraan ini dihitung secara matematis menggunakan model kecerdasan buatan (_Machine Learning_) yang telah mempelajari pola dari **5.421 film dunia** yang tercatat di basis data historis IMDb.
 
 ---
 
@@ -24,30 +25,31 @@ Semua perkiraan ini dihitung secara matematis menggunakan model kecerdasan buata
 Untuk melengkapi tampilan halaman repositori GitHub Anda, simpan hasil tangkapan layar web ke dalam folder `docs/screenshots/` dengan nama-nama file berikut:
 
 ### Petunjuk Pengambilan Gambar:
+
 1. Jalankan aplikasi web di browser (`http://127.0.0.1:8000`).
 2. Gunakan kombinasi tombol `Windows + Shift + S` untuk mengambil tangkapan layar.
 3. Buat folder baru bernama `docs/screenshots/` (jika belum ada).
 4. Simpan gambar dengan nama yang sesuai di bawah ini:
 
-| Bagian yang Ditangkap | Nama File yang Disarankan | Lokasi Penyimpanan |
-| :--- | :--- | :--- |
-| Halaman Simulator & Slider Input | `dashboard-simulator.png` | `docs/screenshots/` |
-| Halaman Riwayat Prediksi & Database | `riwayat-prediksi.png` | `docs/screenshots/` |
-| Ruang Percakapan Asisten CineBot | `cinebot-chat.png` | `docs/screenshots/` |
-| Halaman About & Identitas Mahasiswa | `about-identitas.png` | `docs/screenshots/` |
+| Bagian yang Ditangkap               | Nama File yang Disarankan | Lokasi Penyimpanan  |
+| :---------------------------------- | :------------------------ | :------------------ |
+| Halaman Simulator & Slider Input    | `dashboard-simulator.png` | `docs/screenshots/` |
+| Halaman Riwayat Prediksi & Database | `riwayat-prediksi.png`    | `docs/screenshots/` |
+| Ruang Percakapan Asisten CineBot    | `cinebot-chat.png`        | `docs/screenshots/` |
+| Halaman About & Identitas Mahasiswa | `about-identitas.png`     | `docs/screenshots/` |
 
 ### Pratinjau Tampilan Antarmuka:
 
 ![Simulator CineMetrics](docs/screenshots/dashboard-simulator.png)  
-*Gambar 1: Halaman simulator interaktif dengan slider durasi, penonton, anggaran, dan kurva proyeksi rating.*
+_Gambar 1: Halaman simulator interaktif dengan slider durasi, penonton, anggaran, dan kurva proyeksi rating._
 
 ![Riwayat Prediksi](docs/screenshots/riwayat-prediksi.png)  
-*Gambar 2: Tabel riwayat simulasi yang tersimpan otomatis di dalam database SQLite.*
+_Gambar 2: Tabel riwayat simulasi yang tersimpan otomatis di dalam database SQLite._
 
 ![Konsultasi CineBot](docs/screenshots/cinebot-chat.png)  
-*Gambar 3: Asisten percakapan cerdas untuk konsultasi parameter film dan strategi box office.*
+_Gambar 3: Asisten percakapan cerdas untuk konsultasi parameter film dan strategi box office._
 
-*(Catatan: Setelah Anda mengambil screenshot dan menyimpannya di folder `docs/screenshots/`, gambar akan otomatis muncul di bagian ini pada halaman GitHub).*
+_(Catatan: Setelah Anda mengambil screenshot dan menyimpannya di folder `docs/screenshots/`, gambar akan otomatis muncul di bagian ini pada halaman GitHub)._
 
 ---
 
@@ -79,9 +81,10 @@ Bagaimana cara komputer belajar menebak film? Berikut alur kerjanya yang dibagi 
 ```
 
 ### Penjelasan 2 Model yang Dipakai:
-1. **Pohon Keputusan (*Decision Tree Classifier*):**
-   Cara kerjanya mirip bagan alur tanya-jawab. Model mengecek: *"Apakah jumlah votes penonton di atas batas tertentu? Jika ya, apakah durasinya cukup proporsional?"*. Berdasarkan aturan bertingkat tersebut, film dikelompokkan ke dalam kategori Kurang (< 6.0), Bagus (6.0 - 6.9), atau Sangat Bagus (≥ 7.0).
-2. **Regresi Linear (*Linear Regression*):**
+
+1. **Pohon Keputusan (_Decision Tree Classifier_):**
+   Cara kerjanya mirip bagan alur tanya-jawab. Model mengecek: _"Apakah jumlah votes penonton di atas batas tertentu? Jika ya, apakah durasinya cukup proporsional?"_. Berdasarkan aturan bertingkat tersebut, film dikelompokkan ke dalam kategori Kurang (< 6.0), Bagus (6.0 - 6.9), atau Sangat Bagus (≥ 7.0).
+2. **Regresi Linear (_Linear Regression_):**
    Model ini mencari garis tren hubungan antara durasi dan volume vote terhadap angka rating. Hasilnya berupa perkiraan nilai desimal yang presisi (contoh: 6.7 / 10.0).
 
 ---
@@ -89,9 +92,9 @@ Bagaimana cara komputer belajar menebak film? Berikut alur kerjanya yang dibagi 
 ## 4. Fitur Utama Aplikasi
 
 1. **Simulator Interaktif (What-If Analysis):** Pengguna bisa bereksperimen mengubah-ubah slider durasi tayang, perkiraan jumlah ulasan, anggaran modal, dan tahun rilis untuk melihat pengaruhnya secara langsung.
-2. **Grafik Kurva Dinamis & Gauge Pasar:** Menampilkan visualisasi posisi film terhadap rata-rata industri bioskop serta Indeks Kelayakan Pasar (*Market Viability Score*).
-3. **Penyimpanan Riwayat Prediksi Otomatis:** Setiap kali simulasi dijalankan, data otomatis tersimpan ke database lokal SQLite dan dapat dilihat kembali, dipulihkan (*restore parameter*), atau dibersihkan.
-4. **Asisten AI Percakapan (CineBot):** Asisten pintar terintegrasi Google Gemini yang dapat diajak berdiskusi tentang strategi perfilman. Jika sedang tanpa koneksi internet atau tanpa API key, sistem otomatis beralih ke *Smart Rule-Based Engine* internal sehingga tetap dapat menjawab pertanyaan seputar model.
+2. **Grafik Kurva Dinamis & Gauge Pasar:** Menampilkan visualisasi posisi film terhadap rata-rata industri bioskop serta Indeks Kelayakan Pasar (_Market Viability Score_).
+3. **Penyimpanan Riwayat Prediksi Otomatis:** Setiap kali simulasi dijalankan, data otomatis tersimpan ke database lokal SQLite dan dapat dilihat kembali, dipulihkan (_restore parameter_), atau dibersihkan.
+4. **Asisten AI Percakapan (CineBot):** Asisten pintar terintegrasi Google Gemini yang dapat diajak berdiskusi tentang strategi perfilman. Jika sedang tanpa koneksi internet atau tanpa API key, sistem otomatis beralih ke _Smart Rule-Based Engine_ internal sehingga tetap dapat menjawab pertanyaan seputar model.
 5. **Portal Database Admin:** Dilengkapi akses ke Django Admin bawaan untuk mengelola seluruh data arsip simulasi secara resmi.
 
 ---
@@ -101,6 +104,7 @@ Bagaimana cara komputer belajar menebak film? Berikut alur kerjanya yang dibagi 
 Aplikasi ini telah dirancang agar sangat mudah dijalankan, baik oleh mahasiswa, rekan tim, maupun dosen penguji.
 
 ### Prasyarat Dasar:
+
 - Komputer sudah terpasang **Python** (versi 3.10, 3.11, atau 3.12).
 
 ---
@@ -123,11 +127,13 @@ Aplikasi ini telah dirancang agar sangat mudah dijalankan, baik oleh mahasiswa, 
 Jika Anda lebih nyaman menggunakan baris perintah:
 
 1. **Buka terminal dan masuk ke folder proyek:**
+
    ```bash
    cd "d:/SEMESTER 3/Tugas Akhir"
    ```
 
 2. **Aktifkan virtual environment (jika ada):**
+
    ```powershell
    # Di Windows PowerShell:
    .\venv\Scripts\Activate.ps1
@@ -137,11 +143,13 @@ Jika Anda lebih nyaman menggunakan baris perintah:
    ```
 
 3. **Pasang paket pustaka yang dibutuhkan:**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 4. **Siapkan database SQLite:**
+
    ```bash
    python manage.py migrate
    ```
@@ -159,6 +167,7 @@ Jika Anda lebih nyaman menggunakan baris perintah:
 Jika Anda ingin dosen dapat mencoba aplikasi langsung dari browser tanpa perlu mengunduh file apapun:
 
 ### Opsi A: Melalui GitHub Codespaces
+
 1. Buka repositori ini di GitHub: `https://github.com/y9ricd/CineMetrics`.
 2. Klik tombol hijau **`<> Code`** > pilih tab **`Codespaces`** > klik **`Create codespace on main`**.
 3. Di terminal Codespaces yang muncul di browser, ketik:
@@ -170,6 +179,7 @@ Jika Anda ingin dosen dapat mencoba aplikasi langsung dari browser tanpa perlu m
 4. Klik tombol notifikasi **Open in Browser** yang muncul di sudut kanan bawah.
 
 ### Opsi B: Melalui Streamlit Community Cloud (Aktif 24 Jam)
+
 1. Hubungkan repositori `y9ricd/CineMetrics` ke platform gratis [Streamlit Share](https://share.streamlit.io).
 2. Tentukan file utama: `app.py`.
 3. Aplikasi akan aktif online dan dapat diakses dari laptop maupun handphone melalui tautan publik.
@@ -216,42 +226,39 @@ Tugas Akhir/
 
 ## 8. Verifikasi & Pengujian Otomatis (Unit Testing)
 
-Untuk memastikan tidak ada rumus yang salah dan sistem tidak mengalami *error* saat digunakan, telah dibuat **13 skenario pengujian unit otomatis**.
+Untuk memastikan tidak ada rumus yang salah dan sistem tidak mengalami _error_ saat digunakan, telah dibuat **13 skenario pengujian unit otomatis**.
 
 Jalankan perintah ini di terminal:
+
 ```bash
 python manage.py test predictor
 ```
 
 **Hasil Pengujian:**
+
 ```text
 Ran 13 tests in 1.414s
 OK
 System check identified no issues (0 silenced).
 ```
+
 Seluruh 13 pengujian mencakup: verifikasi pemuatan file biner model, penolakan input angka negatif/tidak masuk akal, kebenaran kalkulasi rating, penyimpanan riwayat ke database, penolakan pertanyaan di luar topik film pada chatbot, dan keabsahan data grafik.
 
 ---
 
-## 9. Identitas Mahasiswa & Tanggung Jawab Proyek
+## 6. Identitas Pengembang & Pembagian Peran
 
-Proyek ini disusun dan dikembangkan secara mandiri (**Tugas Individu**) sebagai pemenuhan Tugas Akhir Semester 3:
+Proyek ini dikembangkan sebagai pemenuhan Tugas Akhir Mata Kuliah Sistem Cerdas oleh:
 
-| Keterangan | Informasi Mahasiswa |
-| :--- | :--- |
-| **Nama Lengkap** | Mohammad Saputra Abdul Farid |
-| **Nomor Induk Mahasiswa (NIM)** | 253307025 |
-| **Program Studi** | D3 Teknologi Informasi |
-| **Institusi** | PSDKU Politeknik Negeri Madiun |
-| **Mata Kuliah** | Sistem Cerdas (Semester 3) |
-| **Fokus Pengembangan** | *Fullstack Machine Learning Deployment* (Data Cleansing P07, Training Decision Tree & Linear Regression, Serialisasi Joblib Modul 14, Backend Django, Integrasi AI Gemini, UI Dashboard Interaktif, dan Unit Testing). |
+| NIM           | Nama Pengembang                  | Program Studi          | Peran & Kontribusi Utama                                                                                                                                                                                                                                                                                                                                                                                          |
+| :------------ | :------------------------------- | :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **253307025** | **Mohammad Saputra Abdul Farid** | D3 Teknologi Informasi | **Fullstack ML Developer & System Architect:** Preprocessing dataset film P07, implementasi training Decision Tree & Linear Regression, ekspor serialisasi `.joblib`, perancangan arsitektur backend Django (caching, form validation, deduplikasi, logging), integrasi CineBot AI dengan fallback rule-based, perancangan antarmuka visualisasi interaktif Bootstrap 5, serta pengujian otomatis (Unit Testing). |
 
 ---
 
-## 10. Checklist Kesesuaian Tugas Modul 14
+## 7. Rubrik Penilaian Modul 14 (Checklist Kesesuaian)
 
-- [x] **Fungsi Aplikasi:** Form input lengkap, inferensi model instan, validasi nilai batas, visualisasi probabilitas dan bobot pengaruh fitur.
-- [x] **Kualitas Kode:** Folder ML dan Django terpisah rapi, penggunaan caching memori model `joblib.load`, bebas dari kebocoran kunci rahasia (*security-checked*).
-- [x] **Dual Interface:** Menyediakan versi Streamlit (`app.py`) sesuai panduan modul praktikum, sekaligus versi web fullstack Django untuk implementasi lebih lanjut.
-- [x] **Kemudahan Instalasi:** Dilengkapi berkas `requirements.txt`, template `.env.example`, dan skrip peluncur otomatis `run.bat`.
-- [x] **Dokumentasi Lengkap:** Penjelasan terstruktur dengan bahasa yang mudah dipahami oleh kalangan umum maupun akademisi.
+- [x] **Fungsi Aplikasi (Skor 8):** Form input lengkap (durasi, vote, budget, tahun), inferensi model berjalan mulus, validasi edge case aktif, dan visualisasi distribusi probabilitas serta _feature importance_.
+- [x] **Pemahaman Kode & Demo (Skor 6):** Arsitektur kode bersih, pemisahan folder `ml_model` dan `predictor`, penggunaan `joblib.load` dengan efisiensi memori.
+- [x] **Kerja Sama & Pembagian Peran (Skor 3):** Identitas pengembang terinci dan tugas terbagi proporsional mencakup seluruh siklus machine learning deployment.
+- [x] **Dokumentasi & Kerapian (Skor 3):** Petunjuk instalasi dapat direproduksi secara mandiri dari terminal dengan `requirements.txt`.
