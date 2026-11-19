@@ -244,21 +244,6 @@ System check identified no issues (0 silenced).
 
 Seluruh 13 pengujian mencakup: verifikasi pemuatan file biner model, penolakan input angka negatif/tidak masuk akal, kebenaran kalkulasi rating, penyimpanan riwayat ke database, penolakan pertanyaan di luar topik film pada chatbot, dan keabsahan data grafik.
 
----
 
-## 6. Identitas Pengembang & Pembagian Peran
 
-Proyek ini dikembangkan sebagai pemenuhan Tugas Akhir Mata Kuliah Sistem Cerdas oleh:
 
-| NIM           | Nama Pengembang                  | Program Studi          | Peran & Kontribusi Utama                                                                                                                                                                                                                                                                                                                                                                                          |
-| :------------ | :------------------------------- | :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **253307025** | **Mohammad Saputra Abdul Farid** | D3 Teknologi Informasi | **Fullstack ML Developer & System Architect:** Preprocessing dataset film P07, implementasi training Decision Tree & Linear Regression, ekspor serialisasi `.joblib`, perancangan arsitektur backend Django (caching, form validation, deduplikasi, logging), integrasi CineBot AI dengan fallback rule-based, perancangan antarmuka visualisasi interaktif Bootstrap 5, serta pengujian otomatis (Unit Testing). |
-
----
-
-## 7. Rubrik Penilaian Modul 14 (Checklist Kesesuaian)
-
-- [x] **Fungsi Aplikasi (Skor 8):** Form input lengkap (durasi, vote, budget, tahun), inferensi model berjalan mulus, validasi edge case aktif, dan visualisasi distribusi probabilitas serta _feature importance_.
-- [x] **Pemahaman Kode & Demo (Skor 6):** Arsitektur kode bersih, pemisahan folder `ml_model` dan `predictor`, penggunaan `joblib.load` dengan efisiensi memori.
-- [x] **Kerja Sama & Pembagian Peran (Skor 3):** Identitas pengembang terinci dan tugas terbagi proporsional mencakup seluruh siklus machine learning deployment.
-- [x] **Dokumentasi & Kerapian (Skor 3):** Petunjuk instalasi dapat direproduksi secara mandiri dari terminal dengan `requirements.txt`.
