@@ -1,216 +1,257 @@
-# CineMetrics: Sistem Cerdas Penaksir Kualitas & Skor Film Berbasis Web Django
+# CineMetrics: Sistem Cerdas Penaksir Kualitas & Rating Film Berbasis Web
 
-> **Tugas Akhir Mata Kuliah Sistem Cerdas**  
-> **Pengembangan Modul 14 (Deployment Model Machine Learning) & Praktikum P07**  
-> Program Studi D3 / D4 Teknologi Informasi — Politeknik Negeri Madiun
-
----
-
-## 1. Deskripsi Aplikasi & Tujuan Pengguna
-
-**CineMetrics** adalah aplikasi berbasis web yang mengintegrasikan model _Machine Learning_ ke dalam framework **Django** untuk memprediksi kualitas dan mengestimasi skor film layar lebar. Aplikasi ini dikembangkan sebagai pemenuhan **Tugas Akhir Modul 14**, mengadopsi model dan dataset eksplorasi film dari penugasan **P07**.
-
-### Tujuan Pengguna & Nilai Bisnis:
-
-1. **Bagi Produser / Rumah Produksi:** Memberikan estimasi awal apakah sebuah rancangan film (berdasarkan durasi, proyeksi ulasan audiens, dan anggaran) berpotensi masuk ke kategori film _Sangat Bagus_, _Bagus_, atau berisiko _Kurang_.
-2. **Bagi Kritikus & Audiens:** Memberikan proyeksi skor IMDb berbasis data historis 5.400+ film dunia.
-3. **Penerapan Prinsip Modul 14 (_Deployment Best Practices_):**
-   - Serialisasi model menggunakan `joblib` (`joblib.dump` dan `joblib.load`).
-   - Menerapkan _Golden Rule Deployment_: matriks fitur input pengguna disusun persis sama (urutan kolom, nama fitur, tipe data) seperti saat model dilatih.
-   - Antarmuka web responsif dengan validasi form yang mencegah _invalid inputs_ (durasi $\le 0$ atau anggaran negatif).
+> **Tugas Akhir Mata Kuliah Sistem Cerdas (Semester 3)**  
+> **Implementasi Modul 14 (Deployment Model Machine Learning) & Praktikum P07**  
+> Program Studi D3 Teknologi Informasi — Politeknik Negeri Madiun  
+> **Pengembang:** Mohammad Saputra Abdul Farid (NIM: 253307025)
 
 ---
 
-## 2. Arsitektur Sistem Cerdas
+## 1. Tentang Aplikasi (Bahasa Sederhana)
+
+**CineMetrics** adalah aplikasi web interaktif yang berfungsi seperti **"kalkulator pintar" untuk industri film**. 
+
+Sebelum sebuah film diproduksi, produser dan sutradara biasanya harus menginvestasikan dana puluhan miliar rupiah tanpa tahu pasti bagaimana respons penonton nantinya. Aplikasi ini membantu memberikan gambaran awal:
+- Apakah rencana film tersebut berpeluang masuk kategori **Sangat Bagus**, **Bagus**, atau berisiko **Kurang**?
+- Kira-kira berapa perkiraan skor rating IMDb (skala 1.0 s.d. 10.0) yang akan diperoleh?
+
+Semua perkiraan ini dihitung secara matematis menggunakan model kecerdasan buatan (*Machine Learning*) yang telah mempelajari pola dari **5.421 film dunia** yang tercatat di basis data historis IMDb.
+
+---
+
+## 2. Panduan Tangkapan Layar (Screenshots)
+
+Untuk melengkapi tampilan halaman repositori GitHub Anda, simpan hasil tangkapan layar web ke dalam folder `docs/screenshots/` dengan nama-nama file berikut:
+
+### Petunjuk Pengambilan Gambar:
+1. Jalankan aplikasi web di browser (`http://127.0.0.1:8000`).
+2. Gunakan kombinasi tombol `Windows + Shift + S` untuk mengambil tangkapan layar.
+3. Buat folder baru bernama `docs/screenshots/` (jika belum ada).
+4. Simpan gambar dengan nama yang sesuai di bawah ini:
+
+| Bagian yang Ditangkap | Nama File yang Disarankan | Lokasi Penyimpanan |
+| :--- | :--- | :--- |
+| Halaman Simulator & Slider Input | `dashboard-simulator.png` | `docs/screenshots/` |
+| Halaman Riwayat Prediksi & Database | `riwayat-prediksi.png` | `docs/screenshots/` |
+| Ruang Percakapan Asisten CineBot | `cinebot-chat.png` | `docs/screenshots/` |
+| Halaman About & Identitas Mahasiswa | `about-identitas.png` | `docs/screenshots/` |
+
+### Pratinjau Tampilan Antarmuka:
+
+![Simulator CineMetrics](docs/screenshots/dashboard-simulator.png)  
+*Gambar 1: Halaman simulator interaktif dengan slider durasi, penonton, anggaran, dan kurva proyeksi rating.*
+
+![Riwayat Prediksi](docs/screenshots/riwayat-prediksi.png)  
+*Gambar 2: Tabel riwayat simulasi yang tersimpan otomatis di dalam database SQLite.*
+
+![Konsultasi CineBot](docs/screenshots/cinebot-chat.png)  
+*Gambar 3: Asisten percakapan cerdas untuk konsultasi parameter film dan strategi box office.*
+
+*(Catatan: Setelah Anda mengambil screenshot dan menyimpannya di folder `docs/screenshots/`, gambar akan otomatis muncul di bagian ini pada halaman GitHub).*
+
+---
+
+## 3. Cara Kerja Sistem (Alur Sederhana)
+
+Bagaimana cara komputer belajar menebak film? Berikut alur kerjanya yang dibagi menjadi 4 tahap:
 
 ```
-[ Dataset: movies_clean.csv ]
-              │
-              ▼
-    [ ml_model/train_and_export.py ]
-              │
-      ┌───────┴────────────────────────┐
-      ▼                                ▼
-[ model_quality.joblib ]      [ model_score.joblib ]
-(DecisionTreeClassifier)      (LinearRegression)
-      │                                │
-      └───────────────┬────────────────┘
-                      ▼
-            [ Django Framework ]
-       ┌──────────────────────────────┐
-       │  predictor/views.py          │
-       │  - Model Caching (Memory)    │
-       │  - Input Dataframe Assembly  │
-       │  - .predict() & Probabilities│
-       └──────────────┬───────────────┘
-                      ▼
-      [ User Interface: Bootstrap 5 ]
-       - Form Input Parameter Film
-       - Status Badge Kualitas & Skor IMDb
-       - Visualisasi Feature Importance
+[ 1. Data Historis Film ]
+   - Mengambil 5.421 data film nyata dari IMDb (durasi, jumlah vote, budget, tahun, rating).
+   - Data dibersihkan dari nilai kosong agar akurat.
+            │
+            ▼
+[ 2. Pelatihan 2 Model Cerdas (Machine Learning) ]
+   - Model A (Pohon Keputusan / Decision Tree):
+     Menebak mutu film (Kurang, Bagus, atau Sangat Bagus).
+   - Model B (Regresi Linear):
+     Menebak angka nilai IMDb (misalnya 6.8 / 10).
+            │
+            ▼
+[ 3. Penyimpanan Model (Serialisasi Joblib) ]
+   - Model yang sudah pintar "dibekukan" ke dalam file biner (.joblib).
+   - Tujuannya agar web bisa langsung memakainya tanpa perlu melatih ulang dari awal.
+            │
+            ▼
+[ 4. Aplikasi Web (Django & Bootstrap 5) ]
+   - Pengguna menggeser slider (Durasi, Votes, Anggaran, Tahun).
+   - Web memanggil model dan menampilkan hasil prediksi + saran strategi dalam hitungan milidetik.
 ```
 
-### Rincian Model yang Digunakan:
-
-1. **Klasifikasi Kualitas Film (`DecisionTreeClassifier`, max_depth=3):**
-   - **Fitur Input:** `runtime` (durasi menit), `votes` (jumlah ulasan), `budget` (anggaran USD), `year` (tahun rilis).
-   - **Target Output:** Kategori diskrit:
-     - `Kurang`: Skor < 6.0
-     - `Bagus`: Skor 6.0 s.d. < 7.0
-     - `Sangat Bagus`: Skor $\ge$ 7.0
-   - **Faktor Penentu Terbesar (_Feature Importance_):** Resonansi Votes (~68.3%), Durasi Tayang (~19.0%), Anggaran (~12.7%), dan Tahun Rilis (0.0%).
-2. **Estimasi Skor IMDb (`LinearRegression`):**
-   - **Fitur Input:** `runtime`, `votes`.
-   - **Target Output:** Skor kontinu IMDb (skala 1.0 – 10.0).
+### Penjelasan 2 Model yang Dipakai:
+1. **Pohon Keputusan (*Decision Tree Classifier*):**
+   Cara kerjanya mirip bagan alur tanya-jawab. Model mengecek: *"Apakah jumlah votes penonton di atas batas tertentu? Jika ya, apakah durasinya cukup proporsional?"*. Berdasarkan aturan bertingkat tersebut, film dikelompokkan ke dalam kategori Kurang (< 6.0), Bagus (6.0 - 6.9), atau Sangat Bagus (≥ 7.0).
+2. **Regresi Linear (*Linear Regression*):**
+   Model ini mencari garis tren hubungan antara durasi dan volume vote terhadap angka rating. Hasilnya berupa perkiraan nilai desimal yang presisi (contoh: 6.7 / 10.0).
 
 ---
 
-## 3. Struktur Direktori Proyek
+## 4. Fitur Utama Aplikasi
+
+1. **Simulator Interaktif (What-If Analysis):** Pengguna bisa bereksperimen mengubah-ubah slider durasi tayang, perkiraan jumlah ulasan, anggaran modal, dan tahun rilis untuk melihat pengaruhnya secara langsung.
+2. **Grafik Kurva Dinamis & Gauge Pasar:** Menampilkan visualisasi posisi film terhadap rata-rata industri bioskop serta Indeks Kelayakan Pasar (*Market Viability Score*).
+3. **Penyimpanan Riwayat Prediksi Otomatis:** Setiap kali simulasi dijalankan, data otomatis tersimpan ke database lokal SQLite dan dapat dilihat kembali, dipulihkan (*restore parameter*), atau dibersihkan.
+4. **Asisten AI Percakapan (CineBot):** Asisten pintar terintegrasi Google Gemini yang dapat diajak berdiskusi tentang strategi perfilman. Jika sedang tanpa koneksi internet atau tanpa API key, sistem otomatis beralih ke *Smart Rule-Based Engine* internal sehingga tetap dapat menjawab pertanyaan seputar model.
+5. **Portal Database Admin:** Dilengkapi akses ke Django Admin bawaan untuk mengelola seluruh data arsip simulasi secara resmi.
+
+---
+
+## 5. Cara Menjalankan Aplikasi di Komputer Lokal
+
+Aplikasi ini telah dirancang agar sangat mudah dijalankan, baik oleh mahasiswa, rekan tim, maupun dosen penguji.
+
+### Prasyarat Dasar:
+- Komputer sudah terpasang **Python** (versi 3.10, 3.11, atau 3.12).
+
+---
+
+### Cara Paling Mudah (Pengguna Windows):
+
+1. **Jalankan Aplikasi Web Django (Versi Lengkap):**
+   Cukup klik dua kali file **`run.bat`** di dalam folder proyek.  
+   Skrip otomatis akan memeriksa database, melakukan migrasi, dan menyalakan server.  
+   Buka browser di alamat: **`http://127.0.0.1:8000/`**
+
+2. **Jalankan Aplikasi Versi Streamlit (Standar Modul 14):**
+   Cukup klik dua kali file **`run_streamlit.bat`**.  
+   Buka browser di alamat: **`http://localhost:8501/`**
+
+---
+
+### Cara Melalui Terminal (Command Prompt / PowerShell):
+
+Jika Anda lebih nyaman menggunakan baris perintah:
+
+1. **Buka terminal dan masuk ke folder proyek:**
+   ```bash
+   cd "d:/SEMESTER 3/Tugas Akhir"
+   ```
+
+2. **Aktifkan virtual environment (jika ada):**
+   ```powershell
+   # Di Windows PowerShell:
+   .\venv\Scripts\Activate.ps1
+
+   # Atau di Command Prompt biasa:
+   .\venv\Scripts\activate.bat
+   ```
+
+3. **Pasang paket pustaka yang dibutuhkan:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Siapkan database SQLite:**
+   ```bash
+   python manage.py migrate
+   ```
+
+5. **Nyalakan server web Django:**
+   ```bash
+   python manage.py runserver
+   ```
+   Buka browser di: **`http://127.0.0.1:8000/`**
+
+---
+
+## 6. Cara Menjalankan Langsung via Cloud (Tanpa Komputer Lokal)
+
+Jika Anda ingin dosen dapat mencoba aplikasi langsung dari browser tanpa perlu mengunduh file apapun:
+
+### Opsi A: Melalui GitHub Codespaces
+1. Buka repositori ini di GitHub: `https://github.com/y9ricd/CineMetrics`.
+2. Klik tombol hijau **`<> Code`** > pilih tab **`Codespaces`** > klik **`Create codespace on main`**.
+3. Di terminal Codespaces yang muncul di browser, ketik:
+   ```bash
+   pip install -r requirements.txt
+   python manage.py migrate
+   python manage.py runserver 0.0.0.0:8000
+   ```
+4. Klik tombol notifikasi **Open in Browser** yang muncul di sudut kanan bawah.
+
+### Opsi B: Melalui Streamlit Community Cloud (Aktif 24 Jam)
+1. Hubungkan repositori `y9ricd/CineMetrics` ke platform gratis [Streamlit Share](https://share.streamlit.io).
+2. Tentukan file utama: `app.py`.
+3. Aplikasi akan aktif online dan dapat diakses dari laptop maupun handphone melalui tautan publik.
+
+---
+
+## 7. Susunan Berkas & Struktur Folder Proyek
+
+Untuk memudahkan dosen dan penilai melihat struktur pekerjaan:
 
 ```text
 Tugas Akhir/
-├── manage.py                     # Skrip manajemen utama Django
-├── requirements.txt              # Daftar pustaka & dependensi
-├── README.md                     # Dokumentasi proyek (Modul 14)
-├── TUGAS_INDIVIDU_REFLEKSI.md    # Jawaban refleksi AI Sub-CPMK 0812 & 0832
+├── manage.py                     # Perintah utama manajemen Django
+├── requirements.txt              # Daftar pustaka Python yang dipakai
+├── README.md                     # Buku panduan & dokumentasi resmi ini
+├── run.bat / run.ps1             # Skrip otomatis 1-klik untuk menjalankan Django
+├── run_streamlit.bat / .ps1      # Skrip otomatis 1-klik untuk menjalankan Streamlit
+├── app.py                        # Implementasi antarmuka Streamlit (Standar Modul 14)
+├── db.sqlite3                    # Database lokal penyimpan riwayat prediksi
 │
-├── ml_model/                     # Pipeline Machine Learning
-│   ├── movies_clean.csv          # Dataset film yang telah dibersihkan
-│   ├── train_and_export.py       # Skrip pelatihan & serialisasi model
-│   ├── model_quality.joblib      # Biner model klasifikasi (Decision Tree)
-│   ├── model_score.joblib        # Biner model regresi (Linear Regression)
-│   └── model_meta.json           # Metadata statistik & bobot fitur
+├── ml_model/                     # Bagian Khusus Machine Learning
+│   ├── movies_clean.csv          # Dataset film hasil pembersihan (5.421 data)
+│   ├── train_and_export.py       # Program untuk melatih & mengekspor model
+│   ├── model_quality.joblib      # File biner model Decision Tree
+│   ├── model_score.joblib        # File biner model Linear Regression
+│   └── model_meta.json           # Rangkuman statistik dan bobot pengaruh fitur
 │
-├── movie_system/                 # Konfigurasi Inti Django
-│   ├── settings.py               # Pengaturan aplikasi & static files
-│   ├── urls.py                   # Routing utama
-│   └── wsgi.py
+├── movie_system/                 # Pengaturan Induk Django
+│   ├── settings.py               # Konfigurasi keamanan, database, dan logging
+│   └── urls.py                   # Pintu gerbang alamat URL web
 │
-└── predictor/                    # Django Application
-    ├── forms.py                  # Validasi form input pengguna
-    ├── views.py                  # Logika inferensi model ML
-    ├── urls.py                   # Routing aplikasi predictor
-    ├── tests.py                  # Pengujian otomatis (Unit Testing)
-    └── templates/
-        └── predictor/
-            ├── base.html         # Template layout induk Bootstrap 5
-            └── index.html        # Antarmuka form input & kartu hasil
+└── predictor/                    # Aplikasi Utama Penaksir Film
+    ├── models.py                 # Struktur tabel database (PredictionHistory)
+    ├── forms.py                  # Pengecekan batas angka wajar input pengguna
+    ├── views.py                  # Logika pemanggilan model ML dan respons web
+    ├── ai_service.py             # Layanan konsultasi CineBot (Gemini AI & Fallback)
+    ├── tests.py                  # 13 pengujian otomatis (Unit Testing)
+    └── templates/predictor/
+        ├── base.html             # Kerangka halaman web utama
+        └── index.html            # Desain antarmuka dashboard Bento visual
 ```
 
 ---
 
-## 4. Petunjuk Instalasi & Cara Menjalankan
+## 8. Verifikasi & Pengujian Otomatis (Unit Testing)
 
-Ikuti langkah-langkah berikut untuk menjalankan aplikasi di komputer lokal:
+Untuk memastikan tidak ada rumus yang salah dan sistem tidak mengalami *error* saat digunakan, telah dibuat **13 skenario pengujian unit otomatis**.
 
-### Prasyarat:
-
-- Python 3.10, 3.11, atau 3.12 terinstal di komputer.
-- Git (opsional).
-
-### Langkah 1: Buka Terminal pada Folder Proyek
-
-```bash
-cd "d:/SEMESTER 3/Tugas Akhir"
-```
-
-### Langkah 2: (Opsional) Buat & Aktifkan Virtual Environment
-
-```bash
-# Membuat virtual environment
-python -m venv venv
-
-# Mengaktifkan di Windows (PowerShell):
-.\venv\Scripts\Activate.ps1
-
-# Atau jika di Command Prompt (cmd):
-.\venv\Scripts\activate.bat
-```
-
-### Langkah 3: Pasang Dependensi Pustaka
-
-```bash
-pip install -r requirements.txt
-```
-
-### Langkah 4: Migrasi Database SQLite
-
-Inisialisasi tabel database (termasuk tabel `PredictionHistory`):
-
-```bash
-python manage.py migrate
-```
-
-### Langkah 5: (Opsional) Latih Ulang Model
-
-Jika ingin melatih ulang model dari file `movies_clean.csv`:
-
-```bash
-python ml_model/train_and_export.py
-```
-
-### Langkah 6: Jalankan Unit Test
-
-Pastikan seluruh komponen berfungsi tanpa error:
-
+Jalankan perintah ini di terminal:
 ```bash
 python manage.py test predictor
 ```
 
-### Langkah 7: Jalankan Aplikasi Web
-
-Tersedia dua mode antarmuka:
-
-#### Mode 1: Aplikasi Streamlit (Standar Resmi Deliverable Modul 14)
-
-Sesuai instruksi Modul 14 (_"Streamlit membungkus model menjadi aplikasi web tanpa HTML/CSS, deliverable file app.py"_):
-
-- **Cara 1 (Double-Click):** Klik dua kali file **`run_streamlit.bat`**.
-- **Cara 2 (PowerShell):**
-  ```powershell
-  .\run_streamlit.ps1
-  # atau
-  .\venv\Scripts\python.exe -m streamlit run app.py
-  ```
-  Buka browser di: **`http://localhost:8501/`**
+**Hasil Pengujian:**
+```text
+Ran 13 tests in 1.414s
+OK
+System check identified no issues (0 silenced).
+```
+Seluruh 13 pengujian mencakup: verifikasi pemuatan file biner model, penolakan input angka negatif/tidak masuk akal, kebenaran kalkulasi rating, penyimpanan riwayat ke database, penolakan pertanyaan di luar topik film pada chatbot, dan keabsahan data grafik.
 
 ---
 
-#### Mode 2: Aplikasi Web Django (Versi Enterprise / Fullstack)
+## 9. Identitas Mahasiswa & Tanggung Jawab Proyek
 
-- **Cara 1 (Double-Click):** Klik dua kali file **`run.bat`**.
-- **Cara 2 (PowerShell):**
-  ```powershell
-  .\run.ps1
-  # atau
-  .\venv\Scripts\python.exe manage.py runserver
-  ```
-  Buka browser di: **`http://127.0.0.1:8000/`**
+Proyek ini disusun dan dikembangkan secara mandiri (**Tugas Individu**) sebagai pemenuhan Tugas Akhir Semester 3:
 
----
-
-## 5. Sumber Dataset & Keterangan Lisensi
-
-- **Dataset:** _Movie Industry Dataset_ (Kaggle / IMDb public data).
-- **Jumlah Baris:** 5.421 film (setelah pembersihan nilai kosong dan filter `budget > 0`).
-- **Lisensi Data:** CC0: Public Domain (bebas digunakan untuk keperluan riset, akademik, dan edukasi).
-- **Atribusi:** Data dikurasi dan disesuaikan dari materi praktikum _Sistem Cerdas (P07)_.
+| Keterangan | Informasi Mahasiswa |
+| :--- | :--- |
+| **Nama Lengkap** | Mohammad Saputra Abdul Farid |
+| **Nomor Induk Mahasiswa (NIM)** | 253307025 |
+| **Program Studi** | D3 Teknologi Informasi |
+| **Institusi** | PSDKU Politeknik Negeri Madiun |
+| **Mata Kuliah** | Sistem Cerdas (Semester 3) |
+| **Fokus Pengembangan** | *Fullstack Machine Learning Deployment* (Data Cleansing P07, Training Decision Tree & Linear Regression, Serialisasi Joblib Modul 14, Backend Django, Integrasi AI Gemini, UI Dashboard Interaktif, dan Unit Testing). |
 
 ---
 
-## 6. Identitas Pengembang & Pembagian Peran
+## 10. Checklist Kesesuaian Tugas Modul 14
 
-Proyek ini dikembangkan sebagai pemenuhan Tugas Akhir Mata Kuliah Sistem Cerdas oleh:
-
-| NIM | Nama Pengembang | Program Studi | Peran & Kontribusi Utama |
-| :--- | :--- | :--- | :--- |
-| **253307025** | **Mohammad Saputra Abdul Farid** | D3 Teknologi Informasi | **Fullstack ML Developer & System Architect:** Preprocessing dataset film P07, implementasi training Decision Tree & Linear Regression, ekspor serialisasi `.joblib`, perancangan arsitektur backend Django (caching, form validation, deduplikasi, logging), integrasi CineBot AI dengan fallback rule-based, perancangan antarmuka visualisasi interaktif Bootstrap 5, serta pengujian otomatis (Unit Testing). |
-
----
-
-## 7. Rubrik Penilaian Modul 14 (Checklist Kesesuaian)
-
-- [x] **Fungsi Aplikasi (Skor 8):** Form input lengkap (durasi, vote, budget, tahun), inferensi model berjalan mulus, validasi edge case aktif, dan visualisasi distribusi probabilitas serta _feature importance_.
-- [x] **Pemahaman Kode & Demo (Skor 6):** Arsitektur kode bersih, pemisahan folder `ml_model` dan `predictor`, penggunaan `joblib.load` dengan efisiensi memori.
-- [x] **Kerja Sama & Pembagian Peran (Skor 3):** Identitas pengembang terinci dan tugas terbagi proporsional mencakup seluruh siklus machine learning deployment.
-- [x] **Dokumentasi & Kerapian (Skor 3):** Petunjuk instalasi dapat direproduksi secara mandiri dari terminal dengan `requirements.txt`.
+- [x] **Fungsi Aplikasi:** Form input lengkap, inferensi model instan, validasi nilai batas, visualisasi probabilitas dan bobot pengaruh fitur.
+- [x] **Kualitas Kode:** Folder ML dan Django terpisah rapi, penggunaan caching memori model `joblib.load`, bebas dari kebocoran kunci rahasia (*security-checked*).
+- [x] **Dual Interface:** Menyediakan versi Streamlit (`app.py`) sesuai panduan modul praktikum, sekaligus versi web fullstack Django untuk implementasi lebih lanjut.
+- [x] **Kemudahan Instalasi:** Dilengkapi berkas `requirements.txt`, template `.env.example`, dan skrip peluncur otomatis `run.bat`.
+- [x] **Dokumentasi Lengkap:** Penjelasan terstruktur dengan bahasa yang mudah dipahami oleh kalangan umum maupun akademisi.
