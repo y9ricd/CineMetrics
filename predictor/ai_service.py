@@ -31,10 +31,7 @@ def _call_gemini_api(prompt: str, system_instruction: str = "") -> str:
         "contents": contents,
         "generationConfig": {
             "temperature": 0.7,
-            "maxOutputTokens": 800,
-            "thinkingConfig": {
-                "thinkingBudget": 0
-            }
+            "maxOutputTokens": 800
         }
     }
 
@@ -43,12 +40,12 @@ def _call_gemini_api(prompt: str, system_instruction: str = "") -> str:
             "parts": [{"text": system_instruction}]
         }
 
-    # Model kandidat yang aktif dan diverifikasi mendukung kunci API ini
+    # Model kandidat resmi Google AI Studio
     candidate_models = [
-        "gemini-3.1-flash-lite",
-        "gemini-3-flash-preview",
-        "gemini-flash-latest",
-        "gemma-4-26b-a4b-it"
+        "gemini-1.5-flash",
+        "gemini-2.0-flash",
+        "gemini-1.5-flash-latest",
+        "gemini-1.5-pro",
     ]
 
     for model_name in candidate_models:
@@ -231,7 +228,18 @@ def ask_cinebot(message: str, current_context: dict = None) -> str:
         return ai_reply
 
     # Smart Knowledge Base Fallback jika tanpa API Key / Offline
-    msg = message.lower()
+    msg = message.lower().strip()
+
+    # Respon sapaan awal
+    if msg in ["hai", "halo", "hello", "hi", "hey", "pagi", "siang", "sore", "malam", "assalamualaikum", "ping"]:
+        return (
+            "Halo! Senang menyapa Anda. Saya **CineBot**, asisten analitik platform CineMetrics.\n\n"
+            "Saat ini sistem terhubung dengan modul pengetahuan analitik perfilman. Anda dapat mencoba menanyakan:\n"
+            "• *Bagaimana cara menaikkan film kategori Kurang ke Bagus?*\n"
+            "• *Mengapa volume votes penonton lebih berpengaruh daripada anggaran?*\n"
+            "• *Jelaskan cara kerja model Decision Tree dan Regresi Linear.*\n\n"
+            "Atau silakan klik salah satu tombol **Quick Prompt** di bawah untuk memulai!"
+        )
 
     if any(k in msg for k in ["kurang", "mengatasi", "menaikkan", "naikkan", "perbaiki", "tingkatkan"]):
         return (
