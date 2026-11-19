@@ -1,0 +1,36 @@
+# Python & Bytecode
+*.py[cod]
+*$py.class
+__pycache__/
+*.so
+.pytest_cache/
+
+# Django
+*.sqlite3
+db.sqlite3
+*.log
+
+# Sensitive Environment & API Keys (JANGAN DI-COMMIT)
+.env
+.env.*
+!.env.example
+
+# Virtual Environment (JANGAN DI-COMMIT - berukuran 500MB+)
+venv/
+.venv/
+env/
+ENV/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Antigravity & Scratch Artifacts
+.gemini/

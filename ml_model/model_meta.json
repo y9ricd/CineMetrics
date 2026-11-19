@@ -1,0 +1,69 @@
+{
+  "dataset_name": "movies_clean.csv",
+  "total_samples": 5421,
+  "features_classification": [
+    "runtime",
+    "votes",
+    "budget",
+    "year"
+  ],
+  "features_regression": [
+    "runtime",
+    "votes"
+  ],
+  "classes": [
+    "Bagus",
+    "Kurang",
+    "Sangat Bagus"
+  ],
+  "decision_tree": {
+    "max_depth": 3,
+    "accuracy_train": 0.5597,
+    "feature_importances": {
+      "runtime": 0.1903,
+      "votes": 0.6827,
+      "budget": 0.127,
+      "year": 0.0
+    }
+  },
+  "linear_regression": {
+    "r2_train": 0.2946,
+    "mae_train": 0.618,
+    "intercept": 4.5465,
+    "coefficients": {
+      "runtime": 0.014986,
+      "votes": 2e-06
+    }
+  },
+  "feature_stats": {
+    "runtime": {
+      "min": 63.0,
+      "max": 271.0,
+      "median": 105.0,
+      "mean": 108.15
+    },
+    "votes": {
+      "min": 195.0,
+      "max": 2400000.0,
+      "median": 52000.0,
+      "mean": 115066.13
+    },
+    "budget": {
+      "min": 6000.0,
+      "max": 356000000.0,
+      "median": 21800000.0,
+      "mean": 36009170.47
+    },
+    "year": {
+      "min": 1980.0,
+      "max": 2020.0,
+      "median": 2002.0,
+      "mean": 2001.66
+    }
+  },
+  "class_distribution": {
+    "Bagus": 2291,
+    "Sangat Bagus": 1568,
+    "Kurang": 1562
+  }
+}
