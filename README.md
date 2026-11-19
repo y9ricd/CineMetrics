@@ -1,8 +1,6 @@
 # CineMetrics: Sistem Cerdas Penaksir Kualitas & Rating Film Berbasis Web
 
-> **Tugas Akhir Mata Kuliah Sistem Cerdas (Semester 3)**  
-> **Implementasi Modul 14 (Deployment Model Machine Learning) & Praktikum P07**  
-> Program Studi D3 Teknologi Informasi — Politeknik Negeri Madiun  
+> **Implementasi Modul 14 (Deployment Model Machine Learning) & Praktikum P07**   
 > **Pengembang:** Mohammad Saputra Abdul Farid (NIM: 253307025)
 
 ---
@@ -20,24 +18,7 @@ Semua perkiraan ini dihitung secara matematis menggunakan model kecerdasan buata
 
 ---
 
-## 2. Panduan Tangkapan Layar (Screenshots)
-
-Untuk melengkapi tampilan halaman repositori GitHub Anda, simpan hasil tangkapan layar web ke dalam folder `docs/screenshots/` dengan nama-nama file berikut:
-
-### Petunjuk Pengambilan Gambar:
-
-1. Jalankan aplikasi web di browser (`http://127.0.0.1:8000`).
-2. Gunakan kombinasi tombol `Windows + Shift + S` untuk mengambil tangkapan layar.
-3. Buat folder baru bernama `docs/screenshots/` (jika belum ada).
-4. Simpan gambar dengan nama yang sesuai di bawah ini:
-
-| Bagian yang Ditangkap               | Nama File yang Disarankan | Lokasi Penyimpanan  |
-| :---------------------------------- | :------------------------ | :------------------ |
-| Halaman Simulator & Slider Input    | `dashboard-simulator.png` | `docs/screenshots/` |
-| Halaman Riwayat Prediksi & Database | `riwayat-prediksi.png`    | `docs/screenshots/` |
-| Ruang Percakapan Asisten CineBot    | `cinebot-chat.png`        | `docs/screenshots/` |
-| Halaman About & Identitas Mahasiswa | `about-identitas.png`     | `docs/screenshots/` |
-
+## 2. Screenshots
 ### Pratinjau Tampilan Antarmuka:
 
 ![Simulator CineMetrics](docs/screenshots/dashboard-simulator.png)  
@@ -60,7 +41,7 @@ _Gambar 6: Bobot kepentingan fitur (decision Tree)_
 
 ---
 
-## 3. Cara Kerja Sistem (Alur Sederhana)
+## 3. Cara Kerja Sistem
 
 Bagaimana cara komputer belajar menebak film? Berikut alur kerjanya yang dibagi menjadi 4 tahap:
 
@@ -111,9 +92,6 @@ Bagaimana cara komputer belajar menebak film? Berikut alur kerjanya yang dibagi 
 ---
 
 ## 5. Cara Menjalankan Aplikasi di Komputer Lokal
-
-Aplikasi ini telah dirancang agar sangat mudah dijalankan, baik oleh mahasiswa, rekan tim, maupun dosen penguji.
-
 ### Prasyarat Dasar:
 
 - Komputer sudah terpasang **Python** (versi 3.10, 3.11, atau 3.12).
