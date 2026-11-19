@@ -105,6 +105,22 @@
             position: relative;
         }
 
+        /* Mobile Responsiveness for App Canvas Frame */
+        @media (max-width: 768px) {
+            .app-outer-wrapper {
+                margin: 8px auto;
+                padding: 0 8px;
+            }
+            .app-main-frame {
+                padding: 16px 12px;
+                border-radius: 20px;
+            }
+            .bento-surface {
+                border-radius: 18px !important;
+                padding: 16px 12px !important;
+            }
+        }
+
         /* Bento Surfaces */
         .bento-surface {
             background-color: var(--bg-bento);

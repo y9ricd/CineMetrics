@@ -79,7 +79,7 @@
 
   <!-- Tengah: 3 Tab Navigasi Utama -->
   <nav
-    class="d-inline-flex align-items-center p-1 rounded-pill"
+    class="d-inline-flex align-items-center p-1 rounded-pill nav-pill-container"
     style="
       background-color: var(--bg-bento);
       border: 1px solid var(--border-bento);
@@ -107,7 +107,7 @@
   </nav>
 
   <!-- Kanan: Status Engine, Total Korpus & Admin Portal -->
-  <div class="d-flex align-items-center gap-2">
+  <div class="d-flex align-items-center gap-2 flex-wrap justify-content-center">
     <div
       class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill"
       style="
@@ -249,10 +249,10 @@
       </div>
     </div>
 
-    <!-- Konten 2 Kolom Hero (Kiri: 42%, Kanan: 58%) -->
+    <!-- Konten 2 Kolom Hero (Kiri: 42% di Desktop, 100% di Mobile; Kanan: 58% di Desktop, 100% di Mobile) -->
     <div class="row g-4 align-items-stretch">
-      <!-- Hero Kiri (Lebar 42%): Tier Kualitas + 2x2 Sub-Kartu Variabel dengan Rentang Min-Max -->
-      <div class="col-lg-5" style="width: 42%">
+      <!-- Hero Kiri: Tier Kualitas + 2x2 Sub-Kartu Variabel dengan Rentang Min-Max -->
+      <div class="col-12 col-lg-5 hero-col-left mb-3 mb-lg-0">
         <!-- Bagian Atas: Prediksi Mutu Film (Decision Tree) -->
         <div class="mb-3">
           <div class="d-flex align-items-center justify-content-between mb-1">
@@ -297,7 +297,7 @@
         <!-- Bagian Bawah: Grid 2x2 Sub-Kartu Variabel Input (#1F1F23) dengan Keterangan Min-Max -->
         <div class="row g-2">
           <!-- Subcard 1: Durasi Tayang -->
-          <div class="col-6">
+          <div class="col-6 col-sm-6 subcard-col">
             <div
               class="subcard-surface p-3 h-100 d-flex flex-column justify-content-between"
             >
@@ -357,7 +357,7 @@
           </div>
 
           <!-- Subcard 2: Resonansi Votes -->
-          <div class="col-6">
+          <div class="col-6 col-sm-6 subcard-col">
             <div
               class="subcard-surface p-3 h-100 d-flex flex-column justify-content-between"
             >
@@ -417,7 +417,7 @@
           </div>
 
           <!-- Subcard 3: Anggaran (USD) -->
-          <div class="col-6">
+          <div class="col-6 col-sm-6 subcard-col">
             <div
               class="subcard-surface p-3 h-100 d-flex flex-column justify-content-between"
             >
@@ -477,7 +477,7 @@
           </div>
 
           <!-- Subcard 4: Tahun Rilis -->
-          <div class="col-6">
+          <div class="col-6 col-sm-6 subcard-col">
             <div
               class="subcard-surface p-3 h-100 d-flex flex-column justify-content-between"
             >
@@ -551,8 +551,8 @@
         </div>
       </div>
 
-      <!-- Hero Kanan (Lebar 58%): CHARCOAL NETRAL SAAS PANEL DENGAN ORANGE HIGHLIGHT ACCENT -->
-      <div class="col-lg-7" style="width: 58%">
+      <!-- Hero Kanan: CHARCOAL NETRAL SAAS PANEL DENGAN ORANGE HIGHLIGHT ACCENT -->
+      <div class="col-12 col-lg-7 hero-col-right">
         <div
           class="p-4 h-100 d-flex flex-column justify-content-between position-relative overflow-hidden"
           style="
@@ -564,7 +564,7 @@
           "
         >
           <!-- Baris Atas Kartu Rating: Teks Angka Besar & Perbandingan Korpus -->
-          <div class="d-flex justify-content-between align-items-start mb-2">
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-2">
             <div>
               <div class="d-flex align-items-center gap-2 mb-1">
                 <span
@@ -655,7 +655,7 @@
 
             <!-- Kanan Atas: Selector Tab Variabel (Durasi, Votes, Budget, Tahun) -->
             <div
-              class="d-flex align-items-center gap-1 p-1 rounded-pill"
+              class="d-flex align-items-center gap-1 p-1 rounded-pill hero-time-tabs"
               style="
                 background: rgba(0, 0, 0, 0.35);
                 border: 1px solid rgba(255, 255, 255, 0.08);
@@ -827,16 +827,16 @@
 
   <!-- B. BLOK TENGAH (HORIZONTAL SCENARIO PRESET STRIP) -->
   <div
-    class="bento-surface px-4 py-3 mb-3 d-flex align-items-center justify-content-between flex-wrap gap-3"
+    class="bento-surface px-4 py-3 mb-3 d-flex align-items-center justify-content-between flex-wrap gap-3 preset-strip-wrapper"
     style="border-radius: 24px"
   >
-    <span class="text-white small fw-bold" style="font-size: 0.88rem"
+    <span class="text-white small fw-bold flex-shrink-0" style="font-size: 0.88rem"
       >Preset Skenario:</span
     >
 
     <!-- 4 Item Preset Skenario -->
     <div
-      class="d-flex align-items-center justify-content-between flex-grow-1 flex-wrap gap-2 px-md-3"
+      class="d-flex align-items-center justify-content-between flex-grow-1 flex-wrap gap-2 px-md-3 preset-strip-container"
     >
       <!-- Item 1: Mid-Budget -->
       <button
@@ -1050,7 +1050,7 @@
   <!-- C. BLOK BAWAH (GRID 3 KARTU BENTO - TINGGI DIKUNCI 320PX, RESILIEN & TIDAK MELEBAR) -->
   <div class="row g-3" style="align-items: stretch">
     <!-- Kartu Bawah 1: NORMAL BAR CHART (Grounded at Bottom, Animasi Bawah ke Atas, Data Korpus) -->
-    <div class="col-lg-5" style="width: 46%">
+    <div class="col-12 col-lg-5 bento-col-bottom-1">
       <div
         class="bento-surface p-4 d-flex flex-column justify-content-between"
         style="
@@ -1277,8 +1277,8 @@
       </div>
     </div>
 
-    <!-- Kartu Bawah 2 (Lebar 27% - "Indeks Kelayakan Pasar / Arc Gauge Kompak") -->
-    <div class="col-lg-3" style="width: 27%">
+    <!-- Kartu Bawah 2: Indeks Kelayakan Pasar / Arc Gauge Kompak -->
+    <div class="col-12 col-md-6 col-lg-3 bento-col-bottom-2">
       <div
         class="bento-surface p-4 d-flex flex-column justify-content-between position-relative"
         style="
@@ -1434,8 +1434,8 @@
       </div>
     </div>
 
-    <!-- Kartu Bawah 3 (Lebar 27% - "✦ Analisis CineBot & Catatan Produser" - RESILIEN DENGAN SCROLL MANDIRI) -->
-    <div class="col-lg-4" style="width: 27%">
+    <!-- Kartu Bawah 3: ✦ Analisis CineBot & Catatan Produser -->
+    <div class="col-12 col-md-6 col-lg-4 bento-col-bottom-3">
       <div
         class="bento-surface p-4 d-flex flex-column justify-content-between"
         style="
@@ -1642,7 +1642,7 @@
       class="px-4 py-2 border-top border-secondary border-opacity-10"
       style="background-color: #151518"
     >
-      <div class="d-flex align-items-center gap-2 flex-wrap">
+      <div class="d-flex align-items-center gap-2 flex-wrap cinebot-quick-prompts-container">
         <span
           class="text-white small font-mono fw-semibold"
           style="font-size: 0.74rem"
@@ -1975,7 +1975,7 @@
 
           <!-- Dual Metric Strip: Rata-Rata Rating IMDb Per Kategori (Informasi Terpisah Rapi) -->
           <div class="row g-2 mt-3" id="kualitasStatStrip">
-            <div class="col-4">
+            <div class="col-12 col-sm-4">
               <div
                 class="p-2 rounded-3 text-center"
                 style="
@@ -2005,7 +2005,7 @@
                 </span>
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-sm-4">
               <div
                 class="p-2 rounded-3 text-center"
                 style="
@@ -2035,7 +2035,7 @@
                 </span>
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-sm-4">
               <div
                 class="p-2 rounded-3 text-center"
                 style="
@@ -2165,7 +2165,7 @@
 
     <!-- 4 Bento Cards Ringkasan Riwayat -->
     <div class="row g-3 mb-4">
-      <div class="col-md-3">
+      <div class="col-6 col-md-3">
         <div class="p-3 rounded-4 h-100" style="background-color: #17171a; border: 1px solid rgba(255, 255, 255, 0.08);">
           <span class="d-block text-white font-mono small fw-semibold" style="font-size: 0.72rem; letter-spacing: 0.04em">TOTAL PREDIKSI</span>
           <div class="d-flex align-items-baseline gap-2 mt-1">
@@ -2175,7 +2175,7 @@
           <span class="d-block text-white font-mono small mt-1" style="font-size: 0.68rem; opacity: 0.7">Tercatat di PredictionHistory</span>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-6 col-md-3">
         <div class="p-3 rounded-4 h-100" style="background-color: #17171a; border: 1px solid rgba(255, 255, 255, 0.08);">
           <span class="d-block text-white font-mono small fw-semibold" style="font-size: 0.72rem; letter-spacing: 0.04em">RERATA ESTIMASI RATING</span>
           <div class="d-flex align-items-baseline gap-2 mt-1">
@@ -2185,7 +2185,7 @@
           <span class="d-block text-white font-mono small mt-1" style="font-size: 0.68rem; opacity: 0.7">Baseline Korpus: ★ 6.4</span>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-6 col-md-3">
         <div class="p-3 rounded-4 h-100" style="background-color: #17171a; border: 1px solid rgba(255, 255, 255, 0.08);">
           <span class="d-block text-white font-mono small fw-semibold" style="font-size: 0.72rem; letter-spacing: 0.04em">MODEL ENGINE</span>
           <div class="d-flex align-items-center gap-2 mt-2">
@@ -2196,7 +2196,7 @@
           <span class="d-block text-white font-mono small mt-2" style="font-size: 0.68rem; opacity: 0.7">+ Linear Regression Skor</span>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-6 col-md-3">
         <div class="p-3 rounded-4 h-100 d-flex flex-column justify-content-between" style="background-color: #17171a; border: 1px solid rgba(255, 255, 255, 0.08);">
           <span class="d-block text-white font-mono small fw-semibold" style="font-size: 0.72rem; letter-spacing: 0.04em">AKSI CEPAT</span>
           <button
@@ -3034,6 +3034,174 @@
   }
   .preset-strip-item:active {
     transform: scale(0.97);
+  }
+
+  /* ======================================================== */
+  /* RESPONSIVE MOBILE & TABLET ADAPTATIONS (FINPOINT BENTO)   */
+  /* ======================================================== */
+
+  /* Navigation Pills Container - Touch Smooth Horizontal Scroll */
+  .nav-pill-container {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .nav-pill-container::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-pill-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Desktop Grid Proportions (FinPoint 42% / 58% and 46% / 27% / 27%) */
+  @media (min-width: 992px) {
+    .hero-col-left {
+      width: 42% !important;
+      flex: 0 0 42% !important;
+      max-width: 42% !important;
+    }
+    .hero-col-right {
+      width: 58% !important;
+      flex: 0 0 58% !important;
+      max-width: 58% !important;
+    }
+    .bento-col-bottom-1 {
+      width: 46% !important;
+      flex: 0 0 46% !important;
+      max-width: 46% !important;
+    }
+    .bento-col-bottom-2 {
+      width: 27% !important;
+      flex: 0 0 27% !important;
+      max-width: 27% !important;
+    }
+    .bento-col-bottom-3 {
+      width: 27% !important;
+      flex: 0 0 27% !important;
+      max-width: 27% !important;
+    }
+  }
+
+  /* Tablet & Mobile Grid (Screens < 992px) */
+  @media (max-width: 991.98px) {
+    .hero-col-left,
+    .hero-col-right,
+    .bento-col-bottom-1 {
+      width: 100% !important;
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+    .preset-strip-wrapper {
+      flex-direction: column;
+      align-items: flex-start !important;
+      padding: 1rem !important;
+    }
+    .preset-strip-container {
+      width: 100%;
+      overflow-x: auto;
+      flex-wrap: nowrap !important;
+      justify-content: flex-start !important;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 6px;
+    }
+    .preset-strip-container::-webkit-scrollbar {
+      display: none;
+    }
+    .preset-strip-item {
+      flex-shrink: 0 !important;
+    }
+  }
+
+  /* Mobile Specific Styles (Screens <= 768px) */
+  @media (max-width: 768px) {
+    .nav-pill-container {
+      width: 100%;
+      justify-content: flex-start !important;
+      padding: 4px;
+    }
+    .nav-pill-btn {
+      padding: 0.35rem 0.8rem;
+      font-size: 0.75rem;
+    }
+    .bento-col-bottom-1,
+    .bento-col-bottom-2,
+    .bento-col-bottom-3 {
+      width: 100% !important;
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+    .bento-surface {
+      height: auto !important;
+      max-height: none !important;
+      min-height: 280px;
+    }
+    .cinebot-quick-prompts-container {
+      overflow-x: auto;
+      flex-wrap: nowrap !important;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+    .cinebot-quick-prompts-container::-webkit-scrollbar {
+      display: none;
+    }
+    .quick-prompt-btn {
+      flex-shrink: 0 !important;
+    }
+  }
+
+  /* Small Phones (Screens <= 576px) */
+  @media (max-width: 575.98px) {
+    .subcard-surface {
+      padding: 0.7rem 0.75rem !important;
+    }
+    .metric-val-display {
+      font-size: 1.15rem !important;
+      white-space: nowrap;
+    }
+    .hero-time-tabs {
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .hero-time-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .hero-time-tabs .btn-time-tab {
+      flex-shrink: 0;
+      padding: 0.18rem 0.45rem;
+      font-size: 0.68rem;
+    }
+    .floating-dark-tooltip {
+      position: relative !important;
+      right: auto !important;
+      top: auto !important;
+      margin-top: 12px;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    #scoreNumber {
+      font-size: 2.6rem !important;
+    }
+  }
+
+  /* Extra Small Devices (Screens <= 370px) */
+  @media (max-width: 370px) {
+    .subcard-col {
+      width: 100% !important;
+      flex: 0 0 100% !important;
+    }
   }
 </style>
 {% endblock %} {% block extra_scripts %}
