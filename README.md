@@ -96,6 +96,10 @@ Bagaimana cara komputer belajar menebak film? Berikut alur kerjanya yang dibagi 
 3. **Penyimpanan Riwayat Prediksi Otomatis:** Setiap kali simulasi dijalankan, data otomatis tersimpan ke database lokal SQLite dan dapat dilihat kembali, dipulihkan (_restore parameter_), atau dibersihkan.
 4. **Asisten AI Percakapan (CineBot):** Asisten pintar terintegrasi Google Gemini yang dapat diajak berdiskusi tentang strategi perfilman. Jika sedang tanpa koneksi internet atau tanpa API key, sistem otomatis beralih ke _Smart Rule-Based Engine_ internal sehingga tetap dapat menjawab pertanyaan seputar model.
 5. **Portal Database Admin:** Dilengkapi akses ke Django Admin bawaan untuk mengelola seluruh data arsip simulasi secara resmi.
+   - **Alamat URL Admin:** `http://127.0.0.1:8000/admin/`
+   - **Username:** `admin`
+   - **Password:** `admin123`  
+   *(Akun admin ini otomatis dibuat saat migrasi database dijalankan).*
 
 ---
 
