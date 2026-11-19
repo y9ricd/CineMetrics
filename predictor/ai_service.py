@@ -7,17 +7,20 @@ from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
-# Muat file .env jika ada
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Muat file .env dari root direktori proyek
+load_dotenv(BASE_DIR / ".env")
 
 def get_gemini_key():
-    load_dotenv(override=True)
+    load_dotenv(BASE_DIR / ".env", override=True)
     return os.getenv("GEMINI_API_KEY", "").strip()
 
 def _call_gemini_api(prompt: str, system_instruction: str = "") -> str:
     """Melakukan panggilan langsung ke Google Gemini REST API jika API Key tersedia."""
     api_key = get_gemini_key()
     if not api_key:
+        logger.info("GEMINI_API_KEY tidak ditemukan di environment. Menggunakan fallback rule-based.")
         return ""
 
     headers = {"Content-Type": "application/json"}
@@ -40,12 +43,13 @@ def _call_gemini_api(prompt: str, system_instruction: str = "") -> str:
             "parts": [{"text": system_instruction}]
         }
 
-    # Model kandidat resmi Google AI Studio
+    # Model kandidat aktif dan responsif
     candidate_models = [
-        "gemini-1.5-flash",
-        "gemini-2.0-flash",
-        "gemini-1.5-flash-latest",
-        "gemini-1.5-pro",
+        "gemini-flash-lite-latest",
+        "gemma-4-26b-a4b-it",
+        "gemini-3.8-flash",
+        "gemini-flash-latest",
+        "gemini-2.5-pro",
     ]
 
     for model_name in candidate_models:
