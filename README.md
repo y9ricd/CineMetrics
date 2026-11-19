@@ -49,6 +49,15 @@ _Gambar 2: Tabel riwayat simulasi yang tersimpan otomatis di dalam database SQLi
 ![Konsultasi CineBot](docs/screenshots/cinebot-chat.png)  
 _Gambar 3: Asisten percakapan cerdas untuk konsultasi parameter film dan strategi box office._
 
+![Metodologi & Dataset](docs/screenshots/dataset1.png)  
+_Gambar 4: Distribusi Volume Judul berdasarkan Dataset._
+
+![Metodologi & Dataset](docs/screenshots/dataset2.png)  
+_Gambar 5: Rating IMDb Judul berdasarkan Genre_
+
+![Metodologi & Dataset](docs/screenshots/dataset3.png)  
+_Gambar 6: Bobot kepentingan fitur (decision Tree)_
+
 ---
 
 ## 3. Cara Kerja Sistem (Alur Sederhana)
@@ -97,7 +106,7 @@ Bagaimana cara komputer belajar menebak film? Berikut alur kerjanya yang dibagi 
    - **Alamat URL Admin:** `http://127.0.0.1:8000/admin/`
    - **Username:** `admin`
    - **Password:** `admin123`  
-   *(Akun admin ini otomatis dibuat saat migrasi database dijalankan).*
+     _(Akun admin ini otomatis dibuat saat migrasi database dijalankan)._
 
 ---
 
@@ -245,7 +254,3 @@ System check identified no issues (0 silenced).
 ```
 
 Seluruh 13 pengujian mencakup: verifikasi pemuatan file biner model, penolakan input angka negatif/tidak masuk akal, kebenaran kalkulasi rating, penyimpanan riwayat ke database, penolakan pertanyaan di luar topik film pada chatbot, dan keabsahan data grafik.
-
-
-
-
