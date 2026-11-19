@@ -49,8 +49,6 @@ _Gambar 2: Tabel riwayat simulasi yang tersimpan otomatis di dalam database SQLi
 ![Konsultasi CineBot](docs/screenshots/cinebot-chat.png)  
 _Gambar 3: Asisten percakapan cerdas untuk konsultasi parameter film dan strategi box office._
 
-_(Catatan: Setelah Anda mengambil screenshot dan menyimpannya di folder `docs/screenshots/`, gambar akan otomatis muncul di bagian ini pada halaman GitHub)._
-
 ---
 
 ## 3. Cara Kerja Sistem (Alur Sederhana)
